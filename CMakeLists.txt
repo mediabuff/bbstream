@@ -12,4 +12,12 @@ file(GLOB_RECURSE bbstream_HEADER
   "include/*.h"
 )
 
+include_directories("core/include")
+
 add_executable(${PROJECT_NAME} ${bbstream_SRC} ${bbstream_HEADER})
+
+add_subdirectory(core)
+
+target_link_libraries(bbstream bbstream_core)	
+
+add_custom_command(TARGET bbstream POST_BUILD COMMAND ${CMAKE_COMMAND}  -E copy $<TARGET_FILE:bbstream_core> "$<TARGET_FILE_DIR:bbstream>/$<TARGET_FILE_NAME:bbstream_core>")
