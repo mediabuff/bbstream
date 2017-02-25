@@ -7,7 +7,8 @@ namespace bbstream {
 			BBC_TWO, // bbc_two_hd
 			BBC_FOUR, // bbc_four
 			BBC_NEWS, //bbc_news24, bbc_news_channel_hd
-			BBC_PARLIAMENT // bbc_parliament
+			BBC_PARLIAMENT, // bbc_parliament
+			UNKNOWN // Used in case the parsing fails.
 		};
 
 		class Channel {
@@ -47,9 +48,9 @@ namespace bbstream {
 				return this->name;
 			};
 
-			static std::string parseChannelName(std::string value) {};
+			static CHANNELS parseChannelName(std::string value);
 
-			void getOutput() {};
+			void getOutput();
 		};
 	}
 }

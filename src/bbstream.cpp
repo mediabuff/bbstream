@@ -20,11 +20,10 @@ int main(int argc, char *argv[]) {
 	std::cout << "bbstream @sequoiia\n";
 
 	if (argc > 1) {
-		std::cout << argv[1];
-	}
+		bbstream::core::Channel * bbcnews = new bbstream::core::Channel(bbstream::core::Channel::parseChannelName(argv[1]));
+		std::cout << "Channel: " << bbcnews->getName() << '\n';
 
-	bbstream::core::Channel * bbcnews = new bbstream::core::Channel(bbstream::core::CHANNELS::BBC_NEWS);
-	std::cout << "Channel: " << bbcnews->getName() << '\n';
+	}
 
 	return 1;
 }
