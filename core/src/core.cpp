@@ -1,4 +1,4 @@
-#include "core.h"
+#include "bbstream\core.h"
 
 namespace bbstream {
 	namespace core {

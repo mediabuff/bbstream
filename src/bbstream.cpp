@@ -1,6 +1,6 @@
 #include <iostream>
-#include <core.h>
-#include <channels.h>
+#include <bbstream/core.h>
+#include <bbstream/channels.h>
 
 
 #ifdef WIN32
@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
 	if (argc > 1) {
 		bbstream::core::Channel * bbcnews = new bbstream::core::Channel(bbstream::core::Channel::parseChannelName(argv[1]));
 		std::cout << "Channel: " << bbcnews->getName() << '\n';
-
+		bbcnews->getOutput();
 	}
 
 	return 1;

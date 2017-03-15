@@ -7,7 +7,16 @@ file(GLOB_RECURSE bbstream_core_SRC
 )
 
 file(GLOB_RECURSE bbstream_core_HEADER
-  "include/*.h"
+  "include/bbstream/*.h"
 )
 
-add_library(${PROJECT_NAME} SHARED ${bbstream_core_SRC} ${bbstream_core_HEADER})
+set(TINYXML2 "../externals/tinyxml2/tinyxml2.cpp" "../externals/tinyxml2/tinyxml2.h")
+
+set(EXTERNAL_DEPENDENCIES ${TINYXML2})
+
+include_directories(${CURL_INCLUDE_DIR})
+include_directories(${CPR_INCLUDE_DIRS})
+
+add_library(${PROJECT_NAME} SHARED ${bbstream_core_SRC} ${bbstream_core_HEADER} ${EXTERNAL_DEPENDENCIES})
+
+target_link_libraries(bbstream_core ${CURL_LIBRARY} ${CPR_LIBRARIES})

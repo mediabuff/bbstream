@@ -1,8 +1,11 @@
 #include <string>
-#include <channels.h>
+#include <bbstream/channels.h>
+#include <bbstream/core.h>
+#include <bbstream/protocols/dash.h>
 #include <sstream>
 #include <locale>
 #include <algorithm>
+#include <cpr\cpr.h>
 
 namespace bbstream {
 	namespace core {
@@ -34,7 +37,22 @@ namespace bbstream {
 		}
 
 		void Channel::getOutput() {
+			std::stringstream manifestEndpointSS;
+			std::string endpoint;
 
+			manifestEndpointSS << bbstream::core::BBC_DASH_LLNW_ENDPOINT << this->id << ".mpd";
+			endpoint = manifestEndpointSS.str();
+
+			cpr::Response response = cpr::Get(endpoint);
+
+			if (response.status_code == 200) {
+				//std::cout << response.text;
+
+				bbstream::core::protocols::Dash * rawDash = new bbstream::core::protocols::Dash(response.text.c_str());
+				tinyxml2::XMLDocument * xmlDoc = rawDash->getDoc();
+
+				std::cout << xmlDoc->FirstChildElement("MPD")->Attribute("publishTime");
+			}
 		}
 	}
 }
