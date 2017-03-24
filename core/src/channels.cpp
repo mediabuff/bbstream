@@ -1,3 +1,23 @@
+/*
+bbstream
+Copyright (C) 2017  Emil Hummel Clausen
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program(LICENSE in root directory).  If not, see <http://www.gnu.org/licenses/>.
+
+Email: emil@hummel.yt
+*/
+
 #include <string>
 #include <bbstream/channels.h>
 #include <bbstream/core.h>
@@ -49,9 +69,9 @@ namespace bbstream {
 				//std::cout << response.text;
 
 				bbstream::core::protocols::Dash * rawDash = new bbstream::core::protocols::Dash(response.text.c_str());
-				tinyxml2::XMLDocument * xmlDoc = rawDash->getDoc();
-
-				std::cout << xmlDoc->FirstChildElement("MPD")->Attribute("publishTime");
+				std::vector<bbstream::core::protocols::AdaptationSet> sets = rawDash->getSets();
+				std::cout << sets.at(0).segmentTemplate->InitializationCreator(sets.at(0).representationSet.at(0).id) << '\n';
+				std::cout << sets.at(0).segmentTemplate->MediaCreator(sets.at(0).representationSet.at(0).id, "34") << '\n';
 			}
 		}
 	}

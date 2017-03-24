@@ -1,3 +1,23 @@
+/*
+	bbstream
+	Copyright (C) 2017  Emil Hummel Clausen
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program(LICENSE in root directory).  If not, see <http://www.gnu.org/licenses/>.
+
+	Email: emil@hummel.yt
+*/
+
 #include <tinyxml2.h>
 #include <string>
 #include <vector>
@@ -55,6 +75,18 @@ namespace bbstream { namespace core { namespace protocols {
 			initialization = payload->Attribute("initialization");
 			media = payload->Attribute("media");
 		}
+
+		std::string InitializationCreator(std::string representationId) {
+			std::vector<std::string> args;
+			args.push_back(representationId);
+			return bbstream::core::replaceArgs(initialization, args);
+		}
+
+		std::string MediaCreator(std::string representationId, std::string number) {
+			std::vector<std::string> args;
+			args.push_back(representationId); args.push_back(number);
+			return bbstream::core::replaceArgs(media, args);
+		}
 	};
 
 	class AdaptationSet {
@@ -103,9 +135,10 @@ namespace bbstream { namespace core { namespace protocols {
 
 			// Iterate through the available AdaptationSet(s)
 			for (const tinyxml2::XMLElement * child = period->FirstChildElement("AdaptationSet"); child; child = child->NextSiblingElement("AdaptationSet")) {
-				std::cout << child->Attribute("contentType") << '\n';
+				//std::cout << child->Attribute("contentType") << '\n';
 				AdaptationSet set = AdaptationSet(child);
 
+				/*
 				for (int i = 0; i < set.representationSet.size(); i++) {
 					Representation r = set.representationSet.at(i);
 					switch (set.setType) {
@@ -117,6 +150,7 @@ namespace bbstream { namespace core { namespace protocols {
 						break;
 					}
 				}
+				*/
 
 				sets.push_back(set);
 			}
@@ -124,6 +158,14 @@ namespace bbstream { namespace core { namespace protocols {
 
 		tinyxml2::XMLDocument * getDoc() {
 			return &doc;
+		}
+
+		std::vector<AdaptationSet> getSets() {
+			return sets;
+		}
+
+		std::string getBaseURL() {
+			return baseUrl;
 		}
 	};
 }}}

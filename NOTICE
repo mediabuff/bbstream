@@ -1,0 +1,14 @@
+This file includes licenses from libraries that are being used in this project.
+
+
+
+
+
+TinyXML-2
+	TinyXML-2 is released under the ZLib license, 
+	so you can use it in open source or commercial code. The details
+	of the license are at the top of every source file.
+
+	TinyXML-2 attempts to be a flexible parser, but with truly correct and
+	compliant XML output. TinyXML-2 should compile on any reasonably C++
+	compliant system. It does not rely on exceptions, RTTI, or the STL.
